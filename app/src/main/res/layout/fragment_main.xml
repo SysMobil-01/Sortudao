@@ -9,9 +9,57 @@
     tools:context="com.sysmobil.sortudao.app.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+    <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/tableLayout">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quer fazer uma nova aposta?"
+                android:id="@+id/txt02" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SIM"
+                android:id="@+id/bt01"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_column="11" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAposta"
+                android:layout_column="0"
+                android:layout_span="12" />
+        </TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verifique os ultimos resultados"
+            android:id="@+id/textView" />
+
+        <WebView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/web01"
+            android:layout_column="0"
+            android:layout_below="@+id/tableLayout"
+            android:layout_alignParentStart="true" />
+
+    </TableLayout>
 
 </RelativeLayout>
