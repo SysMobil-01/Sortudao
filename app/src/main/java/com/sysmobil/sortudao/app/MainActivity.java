@@ -10,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 
 import com.sysmobil.sortudao.app.util.MegaSenaGenerator;
 
@@ -25,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         WebView view01 = (WebView)findViewById(R.id.web01);
+        final ExpandableListView numDezenasList = (ExpandableListView)findViewById(R.id.numDezenasList);
+
+        String[] itens = {"6 Dezenas","7 Dezenas","8 Dezenas","9 Dezenas","10 Dezenas","11 Dezenas","12 Dezenas","13 Dezenas","14 Dezenas","15 Dezenas"};
+
+        numDezenasList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itens));
+
         view01.setWebViewClient(new InternalBrowser());
         view01.getSettings().setJavaScriptEnabled(true);
         view01.loadUrl("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena");
@@ -36,8 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
                 EditText txt = (EditText)findViewById(R.id.txtAposta);
 
-                apostaMega.geraAposta();
-                txt.setText(apostaMega.getAposta());
+
+
+                int numDezenas = numDezenasList.getSelectedItemPosition() + 5;
+
+                apostaMega.geraAposta(numDezenas);
+                txt.setText(apostaMega.toString());
 
             }
 
@@ -69,10 +81,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class InternalBrowser extends WebViewClient {
-
-
-
-
-    }
+    private class InternalBrowser extends WebViewClient {}
 }
