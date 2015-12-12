@@ -27,27 +27,22 @@
             android:textSize="20dp"
             android:textIsSelectable="false" />
 
-        <ExpandableListView
-            android:layout_width="95dp"
+        <Spinner
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/numDezenasList"
-            android:layout_below="@+id/bt01"
-            android:layout_alignParentStart="true"
-            android:layout_alignEnd="@+id/textView"
-            android:layout_above="@+id/txtAposta"
-            android:layout_row="1"
-            android:layout_column="12"
-            android:layout_weight="0.87" />
+            android:layout_weight="1" />
 
         <Button
             android:layout_width="75dp"
             android:layout_height="match_parent"
             android:text="GERAR"
-            android:id="@+id/bt01"
+            android:id="@+id/btnGenerate"
             android:layout_column="12"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_row="1" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -58,16 +53,29 @@
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentBottom="true">
 
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtAposta"
-            android:layout_column="12"
-            android:layout_span="12"
-            android:layout_above="@+id/textView"
-            android:layout_marginBottom="33dp"
-            android:layout_toEndOf="@+id/web01"
-            android:layout_row="2" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="284dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAposta"
+                android:layout_column="12"
+                android:layout_span="12"
+                android:layout_above="@+id/textView"
+                android:layout_toEndOf="@+id/web01"
+                android:layout_row="2"
+                android:clickable="false" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="CP"
+                android:id="@+id/btnCopy" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

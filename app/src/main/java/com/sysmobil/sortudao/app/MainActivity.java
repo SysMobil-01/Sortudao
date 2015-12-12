@@ -1,5 +1,7 @@
 package com.sysmobil.sortudao.app;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.sysmobil.sortudao.app.util.MegaSenaGenerator;
 
@@ -21,13 +25,22 @@ public class MainActivity extends AppCompatActivity {
 
     private MegaSenaGenerator apostaMega = new MegaSenaGenerator();
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+
+
         WebView view01 = (WebView)findViewById(R.id.web01);
-        final ExpandableListView numDezenasList = (ExpandableListView)findViewById(R.id.numDezenasList);
+        final Spinner numDezenasList = (Spinner)findViewById(R.id.numDezenasList);
+        final EditText txt = (EditText)findViewById(R.id.txtAposta);
+
+        txt.setFocusable(false);
 
         String[] itens = {"6 Dezenas","7 Dezenas","8 Dezenas","9 Dezenas","10 Dezenas","11 Dezenas","12 Dezenas","13 Dezenas","14 Dezenas","15 Dezenas"};
 
@@ -37,19 +50,32 @@ public class MainActivity extends AppCompatActivity {
         view01.getSettings().setJavaScriptEnabled(true);
         view01.loadUrl("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena");
 
-        Button bt = (Button) findViewById(R.id.bt01);
-        bt.setOnClickListener(new View.OnClickListener(){
+        Button bt = (Button) findViewById(R.id.btnGenerate);
+        bt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                EditText txt = (EditText)findViewById(R.id.txtAposta);
+                txt.setText("");
 
-
-
-                int numDezenas = numDezenasList.getSelectedItemPosition() + 5;
+                int numDezenas = numDezenasList.getSelectedItemPosition() + 6;
 
                 apostaMega.geraAposta(numDezenas);
                 txt.setText(apostaMega.toString());
+
+            }
+
+        });
+        Button cp = (Button) findViewById(R.id.btnCopy);
+        cp.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                String ap = txt.getText().toString();
+
+                ClipData clip = ClipData.newPlainText("Aposta", ap);
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(getApplicationContext(), "Aposta copiada", Toast.LENGTH_SHORT).show();
 
             }
 
