@@ -18,56 +18,20 @@ public class MegaSenaGenerator {
 //    private int dez4;
 //    private int dez5;
 //    private int dez6;
-    List<Integer> aposta = new ArrayList<Integer>();
 
     public void MegaSenaGenerator(){
-//
-//        this.dez1 = dez1;
-//        this.dez2 = dez2;
-//        this.dez3 = dez3;
-//        this.dez4 = dez4;
-//        this.dez5 = dez5;
-//        this.dez6 = dez6;
 
     }
 
-    public void geraAposta(int n) {
-        aposta.clear();
+    public Aposta geraAposta(int n) {
+        Aposta aposta = new Aposta(n);
         for(int i=0; i<n;i++){
-            int num = geraNum();
-            aposta.add(num);
+            int num = aposta.geraNum();
+            aposta.addDezena(num);
         }
-        ordena();
+        return aposta;
     }
 
-    private void ordena(){
-        Collections.sort(aposta);
-    }
-
-    private int geraNum(){
-        int n = (int) (Math.random()*60);
-        if (!aposta.contains(n) && n != 0) {
-            return n;
-        } else {
-            return geraNum();
-        }
-    }
-    @Override
-    public String toString() {
-        String apostaString = " ";
-        for (int n : aposta) {
-            if(aposta.indexOf(n) == (aposta.size()-1)){
-                apostaString = apostaString + n + " ";
-                return apostaString;
-            }
-            apostaString = apostaString + n + ", ";
-        }
-        return apostaString;
-    }
-
-    public List<Integer> getAposta(){
-        return this.aposta;
-    }
 
 }
 

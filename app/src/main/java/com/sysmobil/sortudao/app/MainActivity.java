@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MegaSenaGenerator apostaMega = new MegaSenaGenerator();
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int numDezenas = numDezenasList.getSelectedItemPosition() + 6;
 
-                apostaMega.geraAposta(numDezenas);
-                txt.setText(apostaMega.toString());
+                txt.setText(apostaMega.geraAposta(numDezenas).toString());
 
             }
 
