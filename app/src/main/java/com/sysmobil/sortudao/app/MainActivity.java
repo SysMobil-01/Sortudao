@@ -12,14 +12,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sysmobil.sortudao.app.util.MegaSenaGenerator;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         WebView view01 = (WebView)findViewById(R.id.web01);
         final Spinner numDezenasList = (Spinner)findViewById(R.id.numDezenasList);
         final EditText txt = (EditText)findViewById(R.id.txtAposta);
+        final TextView txtPreco = (TextView) findViewById(R.id.txtPreco);
 
         txt.setFocusable(false);
 
@@ -46,6 +52,21 @@ public class MainActivity extends AppCompatActivity {
         view01.setWebViewClient(new InternalBrowser());
         view01.getSettings().setJavaScriptEnabled(true);
         view01.loadUrl("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena");
+
+        numDezenasList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                int numDezenas = position+6;
+                NumberFormat df = NumberFormat.getCurrencyInstance();
+                txtPreco.setText(df.format(apostaMega.calcPreco(numDezenas)));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // do nothing
+            }
+
+        });
 
         Button bt = (Button) findViewById(R.id.btnGenerate);
         bt.setOnClickListener(new View.OnClickListener() {
