@@ -2,6 +2,7 @@ package com.sysmobil.sortudao.app;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,10 +18,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.sysmobil.sortudao.app.util.MegaSenaGenerator;
 
 import java.text.DecimalFormat;
@@ -32,16 +35,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Firebase.setAndroidContext(this);
+
+        final String userID = getIntent().getExtras().getString("user");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
+        final Firebase con = new Firebase("https://sortudao.firebaseio.com");
 
         WebView view01 = (WebView)findViewById(R.id.web01);
         final Spinner numDezenasList = (Spinner)findViewById(R.id.numDezenasList);
         final EditText txt = (EditText)findViewById(R.id.txtAposta);
         final TextView txtPreco = (TextView) findViewById(R.id.txtPreco);
+        final Button btnBets = (Button)findViewById(R.id.btnLastBets);
 
         txt.setFocusable(false);
 
@@ -56,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         numDezenasList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                int numDezenas = position+6;
+                int numDezenas = position + 6;
                 NumberFormat df = NumberFormat.getCurrencyInstance();
                 txtPreco.setText(df.format(apostaMega.calcPreco(numDezenas)));
             }
@@ -68,7 +78,19 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        Button bt = (Button) findViewById(R.id.btnGenerate);
+        btnBets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent bets = new Intent(view.getContext() , BetsActivity.class);
+                bets.putExtra("user" , userID);
+                startActivity(bets);
+
+            }
+
+        });
+
+        ImageButton bt = (ImageButton) findViewById(R.id.btnGenerate);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,12 +99,16 @@ public class MainActivity extends AppCompatActivity {
 
                 int numDezenas = numDezenasList.getSelectedItemPosition() + 6;
 
-                txt.setText(apostaMega.geraAposta(numDezenas).toString());
+                String aposta = apostaMega.geraAposta(numDezenas).toString();
+
+                txt.setText(aposta);
+
+                con.child("userbets").child(userID).push().setValue(aposta);;
 
             }
 
         });
-        Button cp = (Button) findViewById(R.id.btnCopy);
+        ImageButton cp = (ImageButton) findViewById(R.id.btnCopy);
         cp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
