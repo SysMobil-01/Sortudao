@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">Sortudao</string>
+    <string name="app_name">Sortudão</string>
     <string name="action_settings">Settings</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <!--ID GoogleAD para producao: ca-app-pub-3568143954311530/5164520404-->
 </resources>

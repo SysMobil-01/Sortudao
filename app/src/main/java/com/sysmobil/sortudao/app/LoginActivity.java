@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.sysmobil.sortudao.app.util.Session;
 
 
@@ -35,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         final EditText txtPwd = (EditText)findViewById(R.id.txtPwd);
         final Button btnLogin = (Button)findViewById(R.id.btnLogin);
         Button btnCreate = (Button)findViewById(R.id.btnCreate);
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
